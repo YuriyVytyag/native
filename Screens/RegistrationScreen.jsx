@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Camera } from 'expo-camera';
+import { AntDesign } from '@expo/vector-icons';
 import {
   StyleSheet,
   ImageBackground,
@@ -10,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 // import * as Font from 'expo-font';
 // import { Apploading } from 'expo';
@@ -31,6 +34,20 @@ const RegistrationScreen = () => {
 
   const [state, setState] = useState(initialState);
   const [isReady, setIsReady] = useState(false);
+
+  const [dimensions, setDimensions] = useState(Dimensions.get('window').width - 16 * 2);
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get('window').width - 16 * 2;
+      console.log('🚀 ~ width:', width);
+      setDimensions(width);
+    };
+    Dimensions.addEventListener('change', onChange);
+    return () => {
+      Dimensions.addEventListener('change', onChange);
+    };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -67,6 +84,11 @@ const RegistrationScreen = () => {
                 }),
               }}
             >
+              <Camera style={styles.avatar}>
+                <View style={styles.avatarInfo}>
+                  <AntDesign name="pluscircleo" size={25} color="#FF6C00" />
+                </View>
+              </Camera>
               <View style={styles.formHeader}>
                 <Text style={styles.formHeaderText}>Регистрация</Text>
               </View>
@@ -127,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'flex-end',
+    alignItems: 'center',
     // ...Platform.select({
     //   ios: {
     //     justifyContent: 'flex-start',
@@ -154,6 +177,22 @@ const styles = StyleSheet.create({
     // letterSpacing: 0.01,
 
     color: '#212121',
+  },
+  avatar: {
+    flex: 1,
+    width: 120,
+    height: 120,
+    position: 'absolute',
+    top: -60,
+    left: 135,
+    backgroundColor: '#F6F6F6',
+    borderRadius: 16,
+    overflow: 'hidden',
+  },
+  avatarInfo: {
+    position: 'absolute',
+    bottom: 15,
+    right: -10,
   },
   input: {
     marginHorizontal: 16,
