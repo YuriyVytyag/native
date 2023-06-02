@@ -28,7 +28,7 @@ const initialState = {
 //   });
 // };
 
-const LoginScreen = () => {
+const LoginScreen = ({ navigation }) => {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
   const [state, setState] = useState(initialState);
@@ -118,7 +118,12 @@ const LoginScreen = () => {
                 <Text style={styles.btnText}>Войти</Text>
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text style={styles.login}>Нет аккаунта? Зарегистрироваться</Text>
+                <Text
+                  onPress={() => navigation.navigate('RegistrationScreen')}
+                  style={styles.login}
+                >
+                  Нет аккаунта? Зарегистрироваться
+                </Text>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
   formHeaderText: {
     marginBottom: 32,
     marginTop: 32,
-    fontWeight: 500,
+    fontWeight: '500',
     fontSize: 30,
     lineHeight: 35,
     textAlign: 'center',
@@ -211,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6C00',
   },
   btnText: {
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 16,
     lineHeight: 19,
     color: 'white',
